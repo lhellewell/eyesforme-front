@@ -18,27 +18,54 @@ function App(): JSX.Element {
   const [promUrl, setPromUrl] = useState("");
   const [status, setStatus] = useState("");
   const [output, setOutput] = useState("");
-  const [fileUrl, setFileUrl] = useState<any>(null);
+  const [fileUrl, setFileUrl] = useState<any>();
+  const [intervalId, setIntervalId] = useState<number>();
   
+  // Get Effect
   useEffect(() => {
     if (file) {
 
-      axios.get(promUrl, { 
-        headers: { 
-          "Authorization": "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b"
-        }}
-      )
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {console.log(error)})
+      var interval = setInterval(pollAPI, 2000);
+      setIntervalId(interval);
+      
     }
-    
-    
   }, [promUrl]);
 
-  const onCheck = () => {
-    console.log(promUrl)
+  useEffect( () => {
+    if (status == "succeeded") {
+      console.log("STOPPING POLL", intervalId);
+      clearInterval(intervalId);
+      
+    } else if (status == "failed") {
+      clearInterval(intervalId);
+    }
+
+  }, [status])
+
+  // Post Effect
+  useEffect(() => {
+    if (fileUrl) {
+      let postData = {
+        version: "50adaf2d3ad20a6f911a8a9e3ccf777b263b8596fbd2c8fc26e8888f8a0edbb5",
+        input: {
+          image: fileUrl
+        }
+      }
+  
+      axios.post(API_URL, postData, {headers: headers})
+      .then((res) => {
+        console.log(res.data);
+        
+        if (res.data.status != "failed") {
+          setStatus(res.data.status);
+          setPromUrl(res.data.urls.get);
+        }
+      })
+      .catch((err) => {console.log(err)})
+    }
+  }, [fileUrl])
+
+  const pollAPI = async () => {
     axios.get(promUrl, { 
       headers: { 
         "Authorization": "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b"
@@ -46,9 +73,13 @@ function App(): JSX.Element {
     )
     .then((response) => {
       console.log(response.data);
+      setStatus(response.data.status);
+      if (response.data.status == "succeeded") {
+        setOutput(response.data.output);
+      }
     })
-    .catch((error) => {console.log(error)})
-  };
+    .catch((error) => {console.log(error)});
+  }
 
   // Selection of file
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,8 +88,6 @@ function App(): JSX.Element {
     if (!fileList) return;
 
     setFile(fileList[0]);
-
-    
   };
 
   // Upload button clicked
@@ -67,27 +96,6 @@ function App(): JSX.Element {
       var reader = new FileReader();
       reader.onloadend = () => {setFileUrl(reader.result)}
       reader.readAsDataURL(file);
-
-      console.log(fileUrl);
-
-      let postData = {
-        version: "50adaf2d3ad20a6f911a8a9e3ccf777b263b8596fbd2c8fc26e8888f8a0edbb5",
-        input: {
-          image: fileUrl
-        }
-      }
-
-      axios.post(API_URL, postData, {headers: headers})
-      .then((res) => {
-        console.log(res.data);
-        
-        if (res.data.status != "failed") {
-          setPromUrl(res.data.urls.get);
-        }
-      })
-      .catch((err) => {console.log(err)})
-
-      console.log(output);
     }
   };
 
@@ -114,9 +122,9 @@ function App(): JSX.Element {
         </button>
       
       <h1>status {status} </h1>
-        <button onClick={onCheck}>
-          CHECK
-        </button>
+      <h1>interval {intervalId}</h1>
+      <h1>promURL {promUrl}</h1>
+      <h1>fileUrl {fileUrl}</h1>
       </div>
       
     </div>
