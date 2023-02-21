@@ -126,6 +126,8 @@ function App() {
       <h1>promURL {promUrl}</h1>
       <h1>fileStr {fileStr}</h1>
       <Filedrop setFile={setFile} setFileStr={setFileStr} />
+      <br />
+      {output ? output : ''}
       </div>
       
     </div>
