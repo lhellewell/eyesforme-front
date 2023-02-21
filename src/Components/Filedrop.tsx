@@ -3,14 +3,11 @@ import {useDropzone} from 'react-dropzone';
 import styled from 'styled-components';
 
 const getColor = (props: any) => {
-	if (props.isDragAccept) {
+	if (props.isDragAccept || props.isFocused) {
 		return '#c8c610';
 	}
 	if (props.isDragReject) {
 		return '#ff1744';
-	}
-	if (props.isFocused) {
-		return '#c8c610';
 	}
 	return '#eeeeee';
 }
@@ -30,6 +27,9 @@ const Container = styled.div`
 	color: #bdbdbd;
 	outline: none;
 	transition: border .24s ease-in-out;
+	&:hover {
+		border-color: #c8c610;
+	}
 	`;
 
 const Filedrop : React.FC<any> = ({setFileStr, setFile, file}) => {
@@ -52,7 +52,6 @@ const Filedrop : React.FC<any> = ({setFileStr, setFile, file}) => {
 			}
 			reader.readAsDataURL(files[0]);
 			console.log("Inputted : ", files[0]);
-			console.log(file);
 			
 		} else {
 			console.log("Only Upload 1 File at a Time");
@@ -66,7 +65,6 @@ const Filedrop : React.FC<any> = ({setFileStr, setFile, file}) => {
 		isFocused,
 		isDragAccept,
 		isDragReject,
-		acceptedFiles
 	  } = useDropzone({onDrop, accept: {'image/*': []}, multiple : false,});
 
 	
