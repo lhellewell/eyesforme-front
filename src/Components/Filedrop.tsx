@@ -32,7 +32,12 @@ const Container = styled.div`
 	}
 	`;
 
-const Filedrop : React.FC<any> = ({setFileStr, setFile, file}) => {
+/**
+ * Filedrop component for drag and drop feature
+ * @param setFileStr : set state from parent component that 
+ * @returns 
+ */
+const Filedrop : React.FC<any> = ({setFileStr, setFile}) => {
 	const [currFile, setCurrFile] = useState<any>();
 
 	// Callback for when the file is dropped into the upload box
