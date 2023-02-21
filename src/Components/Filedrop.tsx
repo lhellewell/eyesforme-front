@@ -1,7 +1,10 @@
 import React, {useCallback} from 'react';
 import {useDropzone} from 'react-dropzone';
+import styled from 'styled-components';
 
 const Filedrop : React.FC<any> = ({setFileStr, setFile}) => {
+	
+
 	const onDrop = useCallback((files: any) => {
 		
 		if (files.length == 1) {
@@ -24,20 +27,14 @@ const Filedrop : React.FC<any> = ({setFileStr, setFile}) => {
 		}
 	}, [])
 
-
-	const {getRootProps, getInputProps, acceptedFiles, fileRejections} = useDropzone({onDrop, accept: {
-		'image/png' : ['.png'],
-		'image/jpeg' : ['.jpeg', '.jpg'],
-	}, maxFiles : 1, 
+	const {getRootProps, getInputProps, acceptedFiles, fileRejections} = useDropzone({onDrop, accept: {'image/*':[]}, multiple : false, 
 	
 	});
-	console.log(getRootProps());
 
-	console.log(getInputProps());
 
 
 	return (
-		<div className=" w-44 h-44 bg-slate-400" {...getRootProps()}>
+		<div className="mt-6 w-44 h-44 bg-slate-200 border-black border-2 border-dashed border-opacity-10" {...getRootProps()}>
 			<input {...getInputProps()} />
 			Drop and drop or click to select files
 		</div>
