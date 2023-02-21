@@ -36,28 +36,29 @@ function App() {
   
   // Status effect hook, used to stop poll if necessary
   useEffect( () => {
-    if (status == "succeeded") {
-      console.log("SUCCEEDED");
-      console.log("Stopping Poll : ", intervalId);
-      clearInterval(intervalId);
-      console.log("OUTPUT : ", output);
-    } else if (status == "failed") {
-      console.log("FAILED");
-      console.log("Stopping Poll : ", intervalId);
-      clearInterval(intervalId);
-    } else if (status == "canceled") {
-      console.log("CANCELED");
-      console.log("Stopping Poll : ", intervalId);
-      clearInterval(intervalId);
-    } else if (status == "starting") {
-      console.log("STARTING...");
-    } else if (status == "processing") {
-      console.log("PROCESSING...");
-    } else {
-      console.log("Status not Recognized")
-      console.log("Stopping Poll : ", intervalId);
+    if (status) {
+      if (status == "succeeded") {
+        console.log("SUCCEEDED");
+        console.log("Stopping Poll : ", intervalId);
+        clearInterval(intervalId);
+        console.log("OUTPUT : ", output);
+      } else if (status == "failed") {
+        console.log("FAILED");
+        console.log("Stopping Poll : ", intervalId);
+        clearInterval(intervalId);
+      } else if (status == "canceled") {
+        console.log("CANCELED");
+        console.log("Stopping Poll : ", intervalId);
+        clearInterval(intervalId);
+      } else if (status == "starting") {
+        console.log("STARTING...");
+      } else if (status == "processing") {
+        console.log("PROCESSING...");
+      } else {
+        console.log("Status not Recognized")
+        console.log("Stopping Poll : ", intervalId);
+      }
     }
-
   }, [status])
 
   // Post Effect
