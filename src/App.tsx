@@ -102,7 +102,11 @@ function App() {
 
   // Upload button clicked
   const onFileUpload = async () => {
-    setPoll(true);
+    if (file) {
+      setPoll(true);
+    } else {
+      console.log("No File Inputted");
+    }
   };
 
 
@@ -114,12 +118,9 @@ function App() {
       </h1>
       
       <br /> 
-      Upload image below
       <div className='mx-auto'>
       <br />
-      <button className='text-3xl' onClick={onFileUpload}>
-        Upload
-      </button>
+      
       
       <br />
       <h1>status {status} </h1>
@@ -128,6 +129,9 @@ function App() {
       <h1>fileStr {fileStr}</h1>
       <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
       <br />
+      <button type="button" className='' onClick={onFileUpload}>
+        Upload
+      </button>
       {output ? output : ''}
       </div>
       
