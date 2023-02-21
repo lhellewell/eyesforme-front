@@ -128,8 +128,7 @@ function App() {
       <h1>promURL {promUrl}</h1>
       <h1>fileStr {fileStr}</h1>
       <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
-      <br />
-      <button type="button" className='' onClick={onFileUpload}>
+      <button type="button" className='mx-6 rounded-md px-2 bg-slate-300 border-black border-[1px]' onClick={onFileUpload}>
         Upload
       </button>
       {output ? output : ''}
