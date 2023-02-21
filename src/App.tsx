@@ -126,7 +126,7 @@ function App() {
       <h1>interval {intervalId}</h1>
       <h1>promURL {promUrl}</h1>
       <h1>fileStr {fileStr}</h1>
-      <Filedrop setFile={setFile} setFileStr={setFileStr} />
+      <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
       <br />
       {output ? output : ''}
       </div>
