@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
+import Logo from "./Components/logo"
 
 const REPLICATE_API_TOKEN = "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b";
 const API_URL = "https://api.replicate.com/v1/predictions"
@@ -9,7 +10,6 @@ const API_URL = "https://api.replicate.com/v1/predictions"
 const headers = {
   'Content-Type': 'application/json',
   "Authorization": "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b",
-  "webhook" : "https://webhook.site/e26f713c-25ec-4ba2-8c19-9c4882deb4d2"
 } 
 
 function App(): JSX.Element {
@@ -21,23 +21,36 @@ function App(): JSX.Element {
   const [fileUrl, setFileUrl] = useState<any>();
   const [intervalId, setIntervalId] = useState<number>();
   
-  // Get Effect
+  // Effect hook used to continously poll the API every 2 seconds
   useEffect(() => {
     if (file) {
 
       var interval = setInterval(pollAPI, 2000);
+      console.log("Starting Poll : ", interval);
       setIntervalId(interval);
       
     }
   }, [promUrl]);
-
+  
+  // Status effect hook, used to stop poll if necessary
   useEffect( () => {
     if (status == "succeeded") {
-      console.log("STOPPING POLL", intervalId);
+      console.log("SUCCEEDED");
+      console.log("Stopping Poll : ", intervalId);
       clearInterval(intervalId);
-      
+      console.log("OUTPUT : ", output);
     } else if (status == "failed") {
+      console.log("FAILED");
+      console.log("Stopping Poll : ", intervalId);
       clearInterval(intervalId);
+    } else if (status == "canceled") {
+      console.log("CANCELED");
+      console.log("Stopping Poll : ", intervalId);
+      clearInterval(intervalId);
+    } else if (status == "starting") {
+      console.log("STARTING...");
+    } else if (status == "processing") {
+      console.log("PROCESSING...");
     }
 
   }, [status])
@@ -46,7 +59,7 @@ function App(): JSX.Element {
   useEffect(() => {
     if (fileUrl) {
       let postData = {
-        version: "50adaf2d3ad20a6f911a8a9e3ccf777b263b8596fbd2c8fc26e8888f8a0edbb5",
+        version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
         input: {
           image: fileUrl
         }
@@ -65,6 +78,7 @@ function App(): JSX.Element {
     }
   }, [fileUrl])
 
+  // Async function that checks the API's current status
   const pollAPI = async () => {
     axios.get(promUrl, { 
       headers: { 
@@ -72,7 +86,6 @@ function App(): JSX.Element {
       }}
     )
     .then((response) => {
-      console.log(response.data);
       setStatus(response.data.status);
       if (response.data.status == "succeeded") {
         setOutput(response.data.output);
@@ -101,10 +114,8 @@ function App(): JSX.Element {
 
 
   return (
-    <div>
-      <h1 className='text-3xl'>
-        be my eyes
-      </h1>
+    <div className='flex flex-col items-center w-full h-screen bg-slate-50'>
+      <Logo />
       <br />
       <h1>
         An Image Description Tool for the Visually Impaired.
@@ -113,9 +124,10 @@ function App(): JSX.Element {
         Uses AI to give an approximation of an uploaded Image
 
       <br />
+      
       <br /> 
       Upload image below
-      <div>
+      <div className='mx-auto'>
         <input type="file" onChange={onFileChange} />
         <button onClick={onFileUpload}>
           Upload
