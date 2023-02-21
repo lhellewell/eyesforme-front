@@ -6,9 +6,12 @@ import Filedrop from './Components/Filedrop';
 const REPLICATE_API_TOKEN = "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b";
 const API_URL = "https://api.replicate.com/v1/predictions"
 
+const POST_HEADERS = {
+  'Content-Type': 'application/json',
+  "Authorization": REPLICATE_API_TOKEN,
+} 
 
-
-const headers = {
+const GET_HEADERS = {
   'Content-Type': 'application/json',
   "Authorization": REPLICATE_API_TOKEN,
 } 
@@ -70,8 +73,9 @@ function App() {
           image: fileStr
         }
       }
-  
-      axios.post(API_URL, postData, {headers: headers})
+      
+      
+      axios.post(API_URL, postData, {headers: POST_HEADERS})
       .then((res) => {
         console.log(res.data);
         
@@ -86,11 +90,7 @@ function App() {
 
   // Async function that checks the API's current status
   const pollAPI = async () => {
-    axios.get(promUrl, { 
-      headers: { 
-        "Authorization": REPLICATE_API_TOKEN
-      }}
-    )
+    axios.get(promUrl, {headers: GET_HEADERS})
     .then((response) => {
       setStatus(response.data.status);
       if (response.data.status == "succeeded") {
