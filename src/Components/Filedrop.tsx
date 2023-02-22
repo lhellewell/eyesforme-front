@@ -18,7 +18,8 @@ const Container = styled.div`
 	flex: 1;
 	display: flex;
 	flex-shrink: 1;
-	width: 40rem;
+	width: 70vw;
+	font-size: min(2.5vw, 1.5rem);
 	flex-direction: column;
 	align-items: center;
 	padding: 20px;
@@ -47,7 +48,7 @@ const Filedrop : React.FC<any> = ({setFileStr, setFile}) => {
 	const onDrop = useCallback((files: any) => {
 		
 		if (files.length == 1) {
-			setFile(files[0]);
+			setFile(URL.createObjectURL(files[0]));
 			setCurrFile(files[0]);
 			const reader = new FileReader();
 	  
@@ -60,6 +61,7 @@ const Filedrop : React.FC<any> = ({setFileStr, setFile}) => {
 			}
 			reader.readAsDataURL(files[0]);
 			console.log("Inputted : ", files[0]);
+			
 			
 		} else {
 			console.log("Only Upload 1 File at a Time");
@@ -78,11 +80,13 @@ const Filedrop : React.FC<any> = ({setFileStr, setFile}) => {
 	
 
 	return (
-		<div className="container cursor-pointer">
-      		<Container {...getRootProps({isFocused, isDragAccept, isDragReject})}>
+		<div className="container cursor-pointer mx-auto">
+      		<Container className='mx-auto' {...getRootProps({isFocused, isDragAccept, isDragReject})}>
         		<input {...getInputProps()} />
         		<p>Drag 'n' drop some files here, or click to select files</p>
-				{currFile ? <p>{currFile.path} - {currFile.size} bytes</p> : <></>}
+				{currFile ? 
+				<p>{currFile.path} - {currFile.size} bytes</p>
+				: <></>}
       		</Container>
     	</div>
 	);

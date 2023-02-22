@@ -45,15 +45,18 @@ function App() {
         console.log("SUCCEEDED");
         console.log("Stopping Poll : ", intervalId);
         clearInterval(intervalId);
+        setPoll(false);
         console.log("OUTPUT : ", output);
       } else if (status == "failed") {
         console.log("FAILED");
         console.log("Stopping Poll : ", intervalId);
         clearInterval(intervalId);
+        setPoll(false);
       } else if (status == "canceled") {
         console.log("CANCELED");
         console.log("Stopping Poll : ", intervalId);
         clearInterval(intervalId);
+        setPoll(false);
       } else if (status == "starting") {
         console.log("STARTING...");
       } else if (status == "processing") {
@@ -127,11 +130,14 @@ function App() {
         <h1>status {status} </h1>
         <h1>interval {intervalId}</h1>
         <h1>promURL {promUrl}</h1>
+        <h1>fileStr {fileStr}</h1>
         <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
-        <button type="button" className='mx-6 rounded-md px-2 bg-slate-300 border-black border-[1px]' onClick={onFileUpload}>
+        <button type="button" className='mx-6 rounded-md px-2 border-black border-[1px]' onClick={onFileUpload}>
           Upload
         </button>
         {output ? output : ''}
+        {console.log(file)}
+        <img src={file}/>
       </div>
       
     </div>
