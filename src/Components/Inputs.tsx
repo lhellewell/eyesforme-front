@@ -1,9 +1,14 @@
 import { Button, Label, TextInput, Select } from "flowbite-react";
 
-const Inputs : React.FC = () => {
+const Inputs : React.FC<any> = ({onFileUpload, task}) => {
+
+	const onChange = () => {
+		let textinput = (document.getElementById("textinput") as HTMLInputElement).value;
+		let task = (document.getElementById("task") as HTMLInputElement).value;
+	}
 
 	return (
-		<form className="flex flex-col gap-4 font-medium text-3xl">
+		<form action="inputs" className="flex flex-col gap-4 font-medium text-3xl">
 			<div id="select">
 			<div className="mb-1 block">
 				<Label
@@ -11,7 +16,7 @@ const Inputs : React.FC = () => {
 				value="Please Select Task"
 				/>
 			</div>
-			<Select id="task" required={true}>
+			<Select id="task" onChange={onChange} required={true}>
 				<option>
 				Image Captioning
 				</option>
@@ -30,11 +35,11 @@ const Inputs : React.FC = () => {
 					value="Input"
 				/>
 				</div>
-				<TextInput id="textinput" required={true}/>
+				<TextInput id="textinput" onChange={onChange} />
 			</div>
 			<div className="flex items-center gap-2">
 			</div>
-			<Button className="text-black" type="submit">
+			<Button className="text-black" type="submit" onClick={onFileUpload}>
 				Submit
 			</Button>
 		</form>

@@ -26,6 +26,8 @@ function App() {
   const [fileStr, setFileStr] = useState<any>();
   const [poll, setPoll] = useState(false);
   const [intervalId, setIntervalId] = useState<number>();
+  const [task, setTask] = useState("");
+  const [input, setInput] = useState("")
   
   // Effect hook used to continously poll the API every 2 seconds
   useEffect(() => {
@@ -105,7 +107,7 @@ function App() {
   }
 
   // Upload button clicked
-  const onFileUpload = async () => {
+  const onFileUpload = async (task: string, input: string) => {
     if (file) {
       setPoll(true);
     } else {
@@ -126,14 +128,11 @@ function App() {
  
         
         <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
-        <button type="button" className='mx-6 rounded-md px-2 border-black border-[1px]' onClick={onFileUpload}>
-          Upload
-        </button>
         
         {file ? <img className=" h-60" src={file}/> : <></>}
         <br />
         {output ? output : ''}
-        <Inputs />
+        <Inputs task={task} onFileUpload={onFileUpload}/>
         <br />
         <br />
         <h1>status {status} </h1>
