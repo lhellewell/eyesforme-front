@@ -1,11 +1,23 @@
 import { Button, Label, TextInput, Select } from "flowbite-react";
 
-const Inputs : React.FC<any> = ({onFileUpload, task}) => {
+const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput, task}) => {
+	
 
-	const onChange = () => {
-		let textinput = (document.getElementById("textinput") as HTMLInputElement).value;
-		let task = (document.getElementById("task") as HTMLInputElement).value;
+	const onChangeText = () => {
+		setInput((document.getElementById("textinput") as HTMLInputElement).value);
 	}
+
+	const onChangeTask = () => {
+		let taskValue = (document.getElementById("task") as HTMLInputElement).value;
+		taskValue = taskValue.toLowerCase().replaceAll(" ", "_")
+
+		// Appropriate splicing for the correct task value for API
+		if (taskValue.includes("question")) {
+			taskValue = taskValue.replace("image", "visual")
+		}
+		
+		setTask(taskValue);
+	}	
 
 	return (
 		<form action="inputs" className="flex flex-col gap-4 font-medium text-3xl">
@@ -16,7 +28,7 @@ const Inputs : React.FC<any> = ({onFileUpload, task}) => {
 				value="Please Select Task"
 				/>
 			</div>
-			<Select id="task" onChange={onChange} required={true}>
+			<Select id="task" onChange={onChangeTask} required={true}>
 				<option>
 				Image Captioning
 				</option>
@@ -35,7 +47,7 @@ const Inputs : React.FC<any> = ({onFileUpload, task}) => {
 					value="Input"
 				/>
 				</div>
-				<TextInput id="textinput" onChange={onChange} />
+				<TextInput id="textinput" onChange={onChangeText} />
 			</div>
 			<div className="flex items-center gap-2">
 			</div>

@@ -73,10 +73,19 @@ function App() {
   // Post Effect
   useEffect(() => {
     if (poll) {
+      let inputType = "";
+      if (task == "visual_question_answering") {
+        let inputType = "question"
+      } else if (task == "image_text_matching") {
+        let inputType = "caption"
+      }
+
       let postData = {
         version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
         input: {
-          image: fileStr
+          image: fileStr,
+          task: task,
+          
         }
       }
       
@@ -107,7 +116,7 @@ function App() {
   }
 
   // Upload button clicked
-  const onFileUpload = async (task: string, input: string) => {
+  const onFileUpload = async () => {
     if (file) {
       setPoll(true);
     } else {
@@ -132,7 +141,7 @@ function App() {
         {file ? <img className=" h-60" src={file}/> : <></>}
         <br />
         {output ? output : ''}
-        <Inputs task={task} onFileUpload={onFileUpload}/>
+        <Inputs task={task} setTask={setTask} setInput={setInput} onFileUpload={onFileUpload}/>
         <br />
         <br />
         <h1>status {status} </h1>
