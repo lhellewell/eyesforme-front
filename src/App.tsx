@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Logo from "./Components/Logo";
+import Inputs from "./Components/Inputs"
 import Filedrop from './Components/Filedrop';
 import Navbar from "./Components/Navbar";
 
@@ -123,21 +123,22 @@ function App() {
       
       <br /> 
       <div className='flex flex-col items-center'>
+ 
+        
+        <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
+        <button type="button" className='mx-6 rounded-md px-2 border-black border-[1px]' onClick={onFileUpload}>
+          Upload
+        </button>
+        
+        {file ? <img className=" h-60" src={file}/> : <></>}
         <br />
-        
-        
+        {output ? output : ''}
+        <br />
         <br />
         <h1>status {status} </h1>
         <h1>interval {intervalId}</h1>
         <h1>promURL {promUrl}</h1>
         <h1>fileStr {fileStr}</h1>
-        <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
-        <button type="button" className='mx-6 rounded-md px-2 border-black border-[1px]' onClick={onFileUpload}>
-          Upload
-        </button>
-        {output ? output : ''}
-        {console.log(file)}
-        <img src={file}/>
       </div>
       
     </div>
