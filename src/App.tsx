@@ -133,6 +133,7 @@ function App() {
         {file ? <img className=" h-60" src={file}/> : <></>}
         <br />
         {output ? output : ''}
+        <Inputs />
         <br />
         <br />
         <h1>status {status} </h1>
