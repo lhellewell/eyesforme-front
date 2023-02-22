@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Logo from "./Components/logo";
+import Logo from "./Components/Logo";
 import Filedrop from './Components/Filedrop';
+import Navbar from "./Components/Navbar";
 
 const REPLICATE_API_TOKEN = "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b";
 const API_URL = "https://api.replicate.com/v1/predictions"
@@ -111,27 +112,26 @@ function App() {
 
 
   return (
-    <div className='flex flex-col items-center w-full h-screen bg-slate-50'>
-      <Logo />
-      <h1>
+    <div className='flex flex-col w-full h-screen bg-slate-50'>
+      <Navbar />
+      <h1 className='text-center mt-1'>
         An Image Description Tool for the Visually Impaired.
       </h1>
       
       <br /> 
-      <div className='mx-auto'>
-      <br />
-      
-      
-      <br />
-      <h1>status {status} </h1>
-      <h1>interval {intervalId}</h1>
-      <h1>promURL {promUrl}</h1>
-      <h1>fileStr {fileStr}</h1>
-      <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
-      <button type="button" className='mx-6 rounded-md px-2 bg-slate-300 border-black border-[1px]' onClick={onFileUpload}>
-        Upload
-      </button>
-      {output ? output : ''}
+      <div className='flex flex-col items-center'>
+        <br />
+        
+        
+        <br />
+        <h1>status {status} </h1>
+        <h1>interval {intervalId}</h1>
+        <h1>promURL {promUrl}</h1>
+        <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
+        <button type="button" className='mx-6 rounded-md px-2 bg-slate-300 border-black border-[1px]' onClick={onFileUpload}>
+          Upload
+        </button>
+        {output ? output : ''}
       </div>
       
     </div>

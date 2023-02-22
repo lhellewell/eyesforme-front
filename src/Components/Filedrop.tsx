@@ -1,21 +1,24 @@
 import React, {useCallback, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 import styled from 'styled-components';
+import { COLORS } from "../values/colors"
 
 const getColor = (props: any) => {
 	if (props.isDragAccept || props.isFocused) {
-		return '#c8c610';
+		return COLORS.yellow;
 	}
 	if (props.isDragReject) {
 		return '#ff1744';
 	}
-	return '#eeeeee';
+	return COLORS.night;
 }
 
 // Styled container div for drag and drop
 const Container = styled.div`
 	flex: 1;
 	display: flex;
+	flex-shrink: 1;
+	width: 40rem;
 	flex-direction: column;
 	align-items: center;
 	padding: 20px;
@@ -23,12 +26,12 @@ const Container = styled.div`
 	border-radius: 2px;
 	border-color: ${props => getColor(props)};
 	border-style: dashed;
-	background-color: #fafafa;
-	color: #bdbdbd;
+	background-color: ${COLORS.grey};
+	color: ${COLORS.night};
 	outline: none;
 	transition: border .24s ease-in-out;
 	&:hover {
-		border-color: #c8c610;
+		border-color: ${COLORS.yellow};
 	}
 	`;
 
