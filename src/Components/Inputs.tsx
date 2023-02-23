@@ -5,6 +5,7 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput, task}) => {
 
 	const onChangeText = () => {
 		setInput((document.getElementById("textinput") as HTMLInputElement).value);
+		console.log((document.getElementById("textinput") as HTMLInputElement).value);
 	}
 
 	const onChangeTask = () => {
@@ -12,15 +13,17 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput, task}) => {
 		taskValue = taskValue.toLowerCase().replaceAll(" ", "_")
 
 		// Appropriate splicing for the correct task value for API
-		if (taskValue.includes("question")) {
-			taskValue = taskValue.replace("image", "visual")
+		if (taskValue == "image_question_answering") {
+			taskValue = taskValue.replace("image", "visual");
+		} else if (taskValue == "image_captioning") {
+			setInput("");
 		}
 		
 		setTask(taskValue);
 	}	
 
 	return (
-		<form action="inputs" className="flex flex-col gap-4 font-medium text-3xl">
+		<form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-4 font-medium text-3xl">
 			<div id="select">
 			<div className="mb-1 block">
 				<Label

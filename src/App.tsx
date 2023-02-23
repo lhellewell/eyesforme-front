@@ -26,7 +26,7 @@ function App() {
   const [fileStr, setFileStr] = useState<any>();
   const [poll, setPoll] = useState(false);
   const [intervalId, setIntervalId] = useState<number>();
-  const [task, setTask] = useState("");
+  const [task, setTask] = useState("image_captioning");
   const [input, setInput] = useState("")
   
   // Effect hook used to continously poll the API every 2 seconds
@@ -39,6 +39,14 @@ function App() {
       
     }
   }, [promUrl]);
+
+  useEffect(() => {
+
+    console.log(task);
+    console.log(input);
+      
+    
+  }, [task]);
   
   // Status effect hook, used to stop poll if necessary
   useEffect( () => {
@@ -73,21 +81,30 @@ function App() {
   // Post Effect
   useEffect(() => {
     if (poll) {
-      let inputType = "";
-      if (task == "visual_question_answering") {
-        let inputType = "question"
-      } else if (task == "image_text_matching") {
-        let inputType = "caption"
-      }
 
-      let postData = {
-        version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
-        input: {
-          image: fileStr,
-          task: task,
-          
+      let postData = {}
+      if (input) {
+        let inputType = ""
+        input == "visual_question_answering" ? inputType = "question" : inputType = "caption";
+
+        postData = {
+          version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
+          input: {
+            image: fileStr,
+            task: task,
+            inputType: input,
+          }
+        }
+      } else {
+        postData = {
+          version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
+          input: {
+            image: fileStr,
+            task: task,
+          }
         }
       }
+      
       
       
       axios.post(API_URL, postData, {headers: POST_HEADERS})
