@@ -39,14 +39,6 @@ function App() {
       
     }
   }, [promUrl]);
-
-  useEffect(() => {
-
-    console.log(task);
-    console.log(input);
-      
-    
-  }, [task]);
   
   // Status effect hook, used to stop poll if necessary
   useEffect( () => {
@@ -81,30 +73,35 @@ function App() {
   // Post Effect
   useEffect(() => {
     if (poll) {
-
+      console.log("FINAL INPUT : ", input, "     FINAL TASK : ", task);
       let postData = {}
       if (input) {
-        let inputType = ""
-        input == "visual_question_answering" ? inputType = "question" : inputType = "caption";
-
-        postData = {
-          version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
-          input: {
+        
+        let inputs = {};
+        if (task == "visual_question_answering") {
+          inputs = {
             image: fileStr,
             task: task,
-            inputType: input,
+            question: input,
+          }
+        } else if (task == "image_text_matching") {
+          inputs = {
+            image: fileStr,
+            task: task,
+            caption: input,
+          }
+        } else {
+          inputs = {
+            image: fileStr,
+            task: task,
           }
         }
-      } else {
+        
         postData = {
           version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
-          input: {
-            image: fileStr,
-            task: task,
-          }
+          input: inputs
         }
       }
-      
       
       
       axios.post(API_URL, postData, {headers: POST_HEADERS})
@@ -117,7 +114,8 @@ function App() {
         }
       })
       .catch((err) => {console.log(err)})
-    }
+    
+  }
   }, [poll])
 
   // Async function that checks the API's current status

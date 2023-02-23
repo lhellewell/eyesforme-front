@@ -5,7 +5,6 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput, task}) => {
 
 	const onChangeText = () => {
 		setInput((document.getElementById("textinput") as HTMLInputElement).value);
-		console.log((document.getElementById("textinput") as HTMLInputElement).value);
 	}
 
 	const onChangeTask = () => {
