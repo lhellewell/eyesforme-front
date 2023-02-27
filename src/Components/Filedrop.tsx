@@ -18,11 +18,10 @@ const Container = styled.div`
 	flex: 1;
 	display: flex;
 	flex-shrink: 1;
-	width: 70vw;
-	font-size: min(2.5vw, 1.5rem);
+	font-size: min(1.5vw, 1.5rem);
 	flex-direction: column;
 	align-items: center;
-	padding: 20px;
+	padding: 10px;
 	border-width: 2px;
 	border-radius: 2px;
 	border-color: ${props => getColor(props)};
@@ -77,18 +76,18 @@ const Filedrop : React.FC<any> = ({setFileStr, setFile}) => {
 		isDragReject,
 	  } = useDropzone({onDrop, accept: {'image/*': []}, multiple : false,});
 
-	
-
 	return (
-		<div className="container cursor-pointer mx-auto">
-      		<Container className='mx-auto' {...getRootProps({isFocused, isDragAccept, isDragReject})}>
-        		<input {...getInputProps()} />
-        		<p>Drag 'n' drop some files here, or click to select files</p>
+		<div className='m-6'>
+			<Container className='container cursor-pointer mx-auto' {...getRootProps({isFocused, isDragAccept, isDragReject})}>
+				<input {...getInputProps()} />
+				<p className=''>Drag 'n' drop some files here, or click to select files</p>
 				{currFile ? 
 				<p>{currFile.path} - {currFile.size} bytes</p>
 				: <></>}
       		</Container>
-    	</div>
+
+		</div>
+      	
 	);
 };
 

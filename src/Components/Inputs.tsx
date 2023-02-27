@@ -1,6 +1,6 @@
 import { Button, Label, TextInput, Select } from "flowbite-react";
 
-const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput, task}) => {
+const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
 	
 
 	const onChangeText = () => {
@@ -30,7 +30,7 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput, task}) => {
 				value="Please Select Task"
 				/>
 			</div>
-			<Select id="task" onChange={onChangeTask} required={true}>
+			<Select id="task" onChange={onChangeTask} className="" required={true}>
 				<option>
 				Image Captioning
 				</option>

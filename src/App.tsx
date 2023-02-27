@@ -3,6 +3,7 @@ import axios from 'axios';
 import Inputs from "./Components/Inputs"
 import Filedrop from './Components/Filedrop';
 import Navbar from "./Components/Navbar";
+import {COLORS} from "./values/colors";
 
 const REPLICATE_API_TOKEN = "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b";
 const API_URL = "https://api.replicate.com/v1/predictions"
@@ -74,7 +75,7 @@ function App() {
   useEffect(() => {
     if (poll) {
       console.log("FINAL INPUT : ", input, "     FINAL TASK : ", task);
-      let postData = {}
+      let postData: Object = {}
       if (input) {
         
         let inputs = {};
@@ -148,23 +149,38 @@ function App() {
       </h1>
       
       <br /> 
-      <div className='flex flex-col items-center'>
+      <div className='flex flex-row'>
  
+        <div className="flex flex-col w-1/2">
+
+          <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
         
-        <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
+          {file ? 
+          <div className='mx-6'>
+            <img className="display-block border-2 border-black border-dashed mb-6" src={file}/>
+          </div> : 
+          <div className='mx-6'>
+            <div className='bg-cgrey w-full h-44 border-2 border-black border-dashed'></div>
+          </div>}
+
+        </div>
         
-        {file ? <img className=" h-60" src={file}/> : <></>}
-        <br />
-        {output ? output : ''}
-        <Inputs task={task} setTask={setTask} setInput={setInput} onFileUpload={onFileUpload}/>
-        <br />
-        <br />
-        <h1>status {status} </h1>
+
+        <div className='flex flex-col w-1/2'>
+          <div className='m-6'>
+            
+            {output ? output : ''}
+            <Inputs setTask={setTask} setInput={setInput} onFileUpload={onFileUpload}/>
+          </div>
+
+        </div>
+        
+      </div>
+      <br />
+      <h1>status {status} </h1>
         <h1>interval {intervalId}</h1>
         <h1>promURL {promUrl}</h1>
         <h1>fileStr {fileStr}</h1>
-      </div>
-      
     </div>
   )
 }
