@@ -1,25 +1,30 @@
 import { Button, Label, TextInput, Select } from "flowbite-react";
+import React, {useState} from 'react';
 
 const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
-	
 
-	const onChangeText = () => {
-		setInput((document.getElementById("textinput") as HTMLInputElement).value);
+	const [isHidden, setIsHidden] = useState(true);
+	const [textInput, setTextInput] = useState("");
+
+	const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setInput(event.target.value);
 	}
 
-	const onChangeTask = () => {
-		let taskValue = (document.getElementById("task") as HTMLInputElement).value;
-		taskValue = taskValue.toLowerCase().replaceAll(" ", "_")
-
-		// Appropriate splicing for the correct task value for API
-		if (taskValue == "image_question_answering") {
-			taskValue = taskValue.replace("image", "visual");
-		} else if (taskValue == "image_captioning") {
+	const onChangeTask = (event: React.ChangeEvent<HTMLSelectElement>) => {
+		
+		const taskInput: string = event.target.value;
+		
+		if (taskInput == "image_captioning") {
 			setInput("");
+			setIsHidden(true);
+		} else  {
+			setInput(taskInput);
+			setIsHidden(false);
 		}
 		
-		setTask(taskValue);
+		setTask(taskInput);
 	}	
+
 
 	return (
 		<form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-4 font-medium">
@@ -32,12 +37,12 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
 					/>
 				</div>
 				<select id="task" onChange={onChangeTask} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-					<option defaultValue={"true"} value="Image Captioning">Image Captioning</option>
-					<option value="Image Question Answering">Image Question Answering</option>
-					<option value="Image Text Matching">Image Text Matching</option>
+					<option defaultValue={"true"} value="image_captioning">Image Captioning</option>
+					<option value="visual_question_answering">Image Question Answering</option>
+					<option value="image_text_matching">Image Text Matching</option>
 				</select>
 			</div>
-			<div>
+			<div hidden={isHidden}>
 				<div className="mb-2 block">
 				<Label
 					htmlFor="textinput"

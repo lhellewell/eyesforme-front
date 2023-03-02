@@ -1,4 +1,4 @@
-export default <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="80px" height="80px" viewBox="0,0,256,256">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="80px" height="80px" viewBox="0,0,256,256">
 				<g transform="translate(8.25806,8.25806) scale(0.93548,0.93548)">
 					<g fill="#ffee32" fillRule="nonzero" stroke="none" strokeWidth="1" strokeLinecap="butt" strokeLinejoin="miter" 
 					strokeMiterlimit="10" strokeDasharray="" strokeDashoffset="0" fontFamily="none" fontWeight="none" fontSize="none" 

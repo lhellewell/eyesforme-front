@@ -24,7 +24,7 @@ export default function Example() {
             <div className="relative flex h-16 items-center justify-between">
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <Logo className="block w-auto lg:hidden" />
+                  <Logo className="block w-auto" alt="Site Logo"/>
                   <LogoText />
                 </div>
               </div>
