@@ -157,10 +157,13 @@ function App() {
         
           {file ? 
           <div className='mx-6'>
-            <img className="display-block border-2 border-black border-dashed mb-6" src={file}/>
+            <img className="display-block border-2 border-black mb-6" src={file}/>
           </div> : 
           <div className='mx-6'>
-            <div className='bg-cgrey w-full h-44 border-2 border-black border-dashed'></div>
+            <div className='flex justify-center items-center flex-col bg-cgrey w-full h-44 border-2 border-black'>
+              <img className="mx-auto" src="/noimage.svg" alt="Yet to Upload Image"/>
+              <h1> Please Upload File </h1>
+            </div>
           </div>}
 
         </div>
