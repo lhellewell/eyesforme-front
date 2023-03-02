@@ -18,10 +18,13 @@ const Container = styled.div`
 	flex: 1;
 	display: flex;
 	flex-shrink: 1;
-	font-size: min(1.5vw, 1.5rem);
+	font-size: min(1.8vw, 2rem);
 	flex-direction: column;
 	align-items: center;
-	padding: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
 	border-width: 2px;
 	border-radius: 2px;
 	border-color: ${props => getColor(props)};
