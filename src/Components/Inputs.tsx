@@ -27,9 +27,9 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
 
 
 	return (
-		<form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-4 font-medium">
+		<form onSubmit={(event) => event.preventDefault()} className="flex flex-col gap-2 font-medium">
 			<div id="select" className="">
-				<div className="mb-1 block">
+				<div className="block">
 					<Label
 					htmlFor="task"
 					value="Please Select Task"
@@ -43,7 +43,7 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
 				</select>
 			</div>
 			<div hidden={isHidden}>
-				<div className="mb-2 block">
+				<div className=" block">
 				<Label
 					htmlFor="textinput"
 					value="Input"
