@@ -53,8 +53,8 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
 			</div>
 			<div className="flex items-center gap-2">
 			</div>
-			<Button className="text-black" type="submit" onClick={onFileUpload}>
-				Submit
+			<Button className="w-1/3 mx-auto text-cblack transition-all bg-cyellow border-cnight border-2 hover:text-white hover:border-choney hover:bg-cnight" type="submit" onClick={onFileUpload}>
+				<p className="">Submit</p>
 			</Button>
 		</form>
 	);
