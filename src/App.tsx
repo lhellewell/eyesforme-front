@@ -163,7 +163,8 @@ function App() {
       
       <br /> 
       <div className='flex flex-row'>
- 
+
+        {/* Photo viewer and file drop */}
         <div className="flex flex-col w-1/2">
 
           <Filedrop setFile={setFile} file={file} setFileStr={setFileStr} />
@@ -181,7 +182,7 @@ function App() {
 
         </div>
         
-
+        {/* Right side */}
         <div className='flex flex-col w-1/2'>
           <div className='mx-6'>
             
@@ -195,10 +196,11 @@ function App() {
         
       </div>
       <br />
-      <h1>status {status} </h1>
-        <h1>interval {intervalId}</h1>
-        <h1>promURL {promUrl}</h1>
-        <h1>fileStr {fileStr}</h1>
+      {/* States for testing */}
+      {/* <h1>status {status} </h1>
+      <h1>interval {intervalId}</h1>
+      <h1>promURL {promUrl}</h1>
+      <h1>fileStr {fileStr}</h1> */}
     </div>
   )
 }
