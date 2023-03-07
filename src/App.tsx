@@ -77,7 +77,11 @@ function App() {
       console.log("FINAL INPUT : ", input, "     FINAL TASK : ", task);
       let postData: Object = {}
     
-      
+      if (input == "" && (task == "visual_question_answering" || task == "image_text_matching")) {
+        setPoll(false);
+        setOutput("Please Choose an Input");
+      }
+
       let inputs = {};
       if (task == "visual_question_answering") {
         inputs = {
@@ -121,14 +125,16 @@ function App() {
 
   // Async function that checks the API's current status
   const pollAPI = async () => {
-    axios.get(promUrl, {headers: GET_HEADERS})
-    .then((response) => {
-      setStatus(response.data.status);
-      if (response.data.status == "succeeded") {
-        setOutput(response.data.output);
-      }
-    })
-    .catch((error) => {console.log(error)});
+    if (poll) {
+      axios.get(promUrl, {headers: GET_HEADERS})
+      .then((response) => {
+        setStatus(response.data.status);
+        if (response.data.status == "succeeded") {
+          setOutput(response.data.output);
+        }
+      })
+      .catch((error) => {console.log(error)});
+    }
   }
 
   // Upload button clicked
@@ -137,6 +143,7 @@ function App() {
       setPoll(true);
     } else {
       console.log("No File Inputted");
+      setOutput("No Image Uploaded");
     }
   };
 
@@ -175,7 +182,7 @@ function App() {
             
             <Inputs setTask={setTask} setInput={setInput} onFileUpload={onFileUpload}/>
 
-            {output ? <div>{output}</div> : ''}
+            {output ? <div className="mt-4 bg-cnight text-white border-choney border-2 text-sm rounded-sm block w-full p-2.5 ">{output}</div> : ''}
           </div>
 
         </div>
