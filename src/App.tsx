@@ -76,35 +76,35 @@ function App() {
     if (poll) {
       console.log("FINAL INPUT : ", input, "     FINAL TASK : ", task);
       let postData: Object = {}
-      if (input) {
-        
-        let inputs = {};
-        if (task == "visual_question_answering") {
-          inputs = {
-            image: fileStr,
-            task: task,
-            question: input,
-          }
-        } else if (task == "image_text_matching") {
-          inputs = {
-            image: fileStr,
-            task: task,
-            caption: input,
-          }
-        } else {
-          inputs = {
-            image: fileStr,
-            task: task,
-          }
+    
+      
+      let inputs = {};
+      if (task == "visual_question_answering") {
+        inputs = {
+          image: fileStr,
+          task: task,
+          question: input,
         }
-        
-        postData = {
-          version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
-          input: inputs
+      } else if (task == "image_text_matching") {
+        inputs = {
+          image: fileStr,
+          task: task,
+          caption: input,
+        }
+      } else {
+        inputs = {
+          image: fileStr,
+          task: task,
         }
       }
       
+      postData = {
+        version: "2e1dddc8621f72155f24cf2e0adbde548458d3cab9f00c0139eea840d0ac4746",
+        input: inputs
+      }
+
       
+      console.log("POST DATA : ", postData);
       axios.post(API_URL, postData, {headers: POST_HEADERS})
       .then((res) => {
         console.log(res.data);
@@ -162,7 +162,7 @@ function App() {
           <div className='mx-6'>
             <div className='flex justify-center items-center flex-col bg-cgrey w-full h-44 border-2 border-black'>
               <img className="mx-auto" src="/noimage.svg" alt="Yet to Upload Image"/>
-              <h1> Please Upload File </h1>
+              <h1> Please Upload File Above</h1>
             </div>
           </div>}
 
@@ -170,10 +170,12 @@ function App() {
         
 
         <div className='flex flex-col w-1/2'>
-          <div className='m-6'>
+          <div className='mx-6'>
             
-            {output ? output : ''}
+            
             <Inputs setTask={setTask} setInput={setInput} onFileUpload={onFileUpload}/>
+
+            {output ? <div>{output}</div> : ''}
           </div>
 
         </div>
