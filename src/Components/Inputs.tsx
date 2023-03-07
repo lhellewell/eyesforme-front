@@ -1,15 +1,23 @@
 import { Button, Label, TextInput, Select } from "flowbite-react";
 import React, {useState} from 'react';
 
+/**
+ * Component for the input fields for task/input as well as the submit button.
+ * @param onFileUpload - used to upload the file to the parent component.
+ * @param setTask - used to set the task in the parent component.
+ * @param setInput - used to set the input state in the parent component.
+ * @returns the component tree for the input fields
+ */
 const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
 
-	const [isHidden, setIsHidden] = useState(true);
-	const [textInput, setTextInput] = useState("");
+	const [isHidden, setIsHidden] = useState(true); // state for hiding/showing the inputs
 
+	// setting the input state
 	const onChangeText = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInput(event.target.value);
 	}
 
+	// setting the task state and resetting the input state if necessary
 	const onChangeTask = (event: React.ChangeEvent<HTMLSelectElement>) => {
 		
 		const taskInput: string = event.target.value;

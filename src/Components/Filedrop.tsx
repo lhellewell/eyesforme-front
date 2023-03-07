@@ -3,6 +3,7 @@ import {useDropzone} from 'react-dropzone';
 import styled from 'styled-components';
 import { COLORS } from "../values/colors"
 
+// Dynamic coloring for the dropzone
 const getColor = (props: any) => {
 	if (props.isDragAccept || props.isFocused) {
 		return COLORS.yellow;
