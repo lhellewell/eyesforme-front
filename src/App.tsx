@@ -5,6 +5,7 @@ import Filedrop from './Components/Filedrop';
 import Navbar from "./Components/Navbar";
 import {COLORS} from "./values/colors";
 
+// Constants
 const REPLICATE_API_TOKEN = "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b";
 const API_URL = "https://api.replicate.com/v1/predictions"
 
@@ -17,18 +18,21 @@ const GET_HEADERS = {
   'Content-Type': 'application/json',
   "Authorization": REPLICATE_API_TOKEN,
 } 
-
+/**
+ * Main app component for homepage
+ * @returns homepage component tree
+ */
 function App() {
 
   const [file, setFile] = useState<any>(null);
-  const [promUrl, setPromUrl] = useState("");
-  const [status, setStatus] = useState("");
-  const [output, setOutput] = useState("");
-  const [fileStr, setFileStr] = useState<any>();
-  const [poll, setPoll] = useState(false);
-  const [intervalId, setIntervalId] = useState<number>();
-  const [task, setTask] = useState("image_captioning");
-  const [input, setInput] = useState("")
+  const [promUrl, setPromUrl] = useState(""); // Promise URL for api used
+  const [status, setStatus] = useState(""); // Status of api request
+  const [output, setOutput] = useState(""); // Output of api request
+  const [fileStr, setFileStr] = useState<any>(); // Stringified file contents
+  const [poll, setPoll] = useState(false); // Flag for polling api request
+  const [intervalId, setIntervalId] = useState<number>(); // Interval ID for polling api request
+  const [task, setTask] = useState("image_captioning"); // Current task being run for api request
+  const [input, setInput] = useState("") // Current input being used for api request
   
   // Effect hook used to continously poll the API every 2 seconds
   useEffect(() => {
@@ -44,44 +48,46 @@ function App() {
   // Status effect hook, used to stop poll if necessary
   useEffect( () => {
     if (status) {
-      if (status == "succeeded") {
+      if (status == "succeeded") { // if api request succeeded
         console.log("SUCCEEDED");
         console.log("Stopping Poll : ", intervalId);
         clearInterval(intervalId);
         setPoll(false);
         console.log("OUTPUT : ", output);
-      } else if (status == "failed") {
+      } else if (status == "failed") { // if api request failed
         console.log("FAILED");
         console.log("Stopping Poll : ", intervalId);
         clearInterval(intervalId);
         setPoll(false);
-      } else if (status == "canceled") {
+      } else if (status == "canceled") { // if api request canceled
         console.log("CANCELED");
         console.log("Stopping Poll : ", intervalId);
         clearInterval(intervalId);
         setPoll(false);
-      } else if (status == "starting") {
+      } else if (status == "starting") { // if api request starting
         console.log("STARTING...");
-      } else if (status == "processing") {
+      } else if (status == "processing") { // if api request processing
         console.log("PROCESSING...");
-      } else {
+      } else {                     
         console.log("Status not Recognized")
         console.log("Stopping Poll : ", intervalId);
       }
     }
   }, [status])
 
-  // Post Effect
+  // Post Effect used for initial post request and inputs
   useEffect(() => {
     if (poll) {
       console.log("FINAL INPUT : ", input, "     FINAL TASK : ", task);
       let postData: Object = {}
-    
+      
+      // check if the a necessary input is provided
       if (input == "" && (task == "visual_question_answering" || task == "image_text_matching")) {
         setPoll(false);
         setOutput("Please Choose an Input");
       }
 
+      // Building of inputs for the post request depending on the task
       let inputs = {};
       if (task == "visual_question_answering") {
         inputs = {
@@ -107,7 +113,7 @@ function App() {
         input: inputs
       }
 
-      
+      // Post
       console.log("POST DATA : ", postData);
       axios.post(API_URL, postData, {headers: POST_HEADERS})
       .then((res) => {
