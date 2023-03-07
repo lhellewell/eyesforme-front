@@ -36,8 +36,8 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
 					className="text-base"
 					/>
 				</div>
-				<select id="task" onChange={onChangeTask} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-					<option defaultValue={"true"} value="image_captioning">Image Captioning</option>
+				<select id="task" onChange={onChangeTask} className="bg-cgrey border-cnight border-2 text-gray-900 text-sm rounded-sm block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					<option className="border-2 border-black text-inherit" defaultValue={"true"} value="image_captioning">Image Captioning</option>
 					<option value="visual_question_answering">Image Question Answering</option>
 					<option value="image_text_matching">Image Text Matching</option>
 				</select>
@@ -49,12 +49,12 @@ const Inputs : React.FC<any> = ({onFileUpload, setTask, setInput}) => {
 					value="Input"
 				/>
 				</div>
-				<TextInput id="textinput" onChange={onChangeText} />
+				<input id="textinput" onChange={onChangeText} className="bg-cgrey border-cnight border-2 text-gray-900 text-sm rounded-sm block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 			</div>
 			<div className="flex items-center gap-2">
 			</div>
-			<Button className="w-1/3 mx-auto text-cblack transition-all bg-cyellow border-cnight border-2 hover:text-white hover:border-choney hover:bg-cnight" type="submit" onClick={onFileUpload}>
-				<p className="">Submit</p>
+			<Button className="w-1/3 mx-auto text-cnight transition-all bg-cyellow hover:text-white border-cnight border-2  hover:border-choney hover:bg-cnight" type="submit" onClick={onFileUpload}>
+				<p className="text-inherit ">Submit</p>
 			</Button>
 		</form>
 	);
