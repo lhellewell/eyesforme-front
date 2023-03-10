@@ -3,6 +3,8 @@ import axios from 'axios';
 import Inputs from "./Components/Inputs"
 import Filedrop from './Components/Filedrop';
 import Navbar from "./Components/Navbar";
+import { useGoogleLogin } from "@react-oauth/google";
+
 import {COLORS} from "./values/colors";
 
 // Constants
@@ -153,6 +155,19 @@ function App() {
     }
   };
 
+  const googleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      console.log(tokenResponse);
+      const userInfo = await axios.get(
+      'https://www.googleapis.com/oauth2/v3/userinfo',
+      { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } },
+      );
+    
+      console.log(userInfo);
+    },
+    onError: errorResponse => console.log(errorResponse),
+    });
+
 
   return (
     <div className='flex flex-col w-full h-screen bg-slate-50'>
@@ -196,6 +211,7 @@ function App() {
         
       </div>
       <br />
+      <button onClick={googleLogin}>GOOGLE LOGIN</button>
       {/* States for testing */}
       {/* <h1>status {status} </h1>
       <h1>interval {intervalId}</h1>
