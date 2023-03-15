@@ -1,8 +1,10 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ReactComponent as Logo } from '../assets/logo.svg'
 import LogoText from './LogoText'
 import {  GoogleLogin } from "@react-oauth/google";
+import AccountContext from '../contexts/AccountContext';
+import axios from 'axios';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -12,15 +14,26 @@ function classNames(...classes) {
  * 
  */
 export default function Navbar() {
+  const {loggedIn, setLoggedIn} = useContext(AccountContext);
+  const {userInfo, setUserInfo} = useContext(AccountContext);
 
   const onLogin = async (response) => {
 
-    const serverInfo = await axios.get(
+    await axios.get(
       'https://localhost:7048/User/login',
       { headers: { Authorization: `Bearer ${response.credential}` } },
+    ).then(res => {
+      console.log(res);
+      setLoggedIn(true);
+      setUserInfo(res.data);
+    }).catch(err => 
+      console.log(err)
     );
+  }
 
-    console.log(serverInfo);
+  const onLogout = async () => {
+    setLoggedIn(false);
+    setUserInfo({});
   }
 
   return (
@@ -37,8 +50,8 @@ export default function Navbar() {
               </div>
               
 
-              
-              <GoogleLogin text="signin" type="icon" shape="pill" size="large" onSuccess={Response => onLogin(Response)} onError={() => console.log("failed")} />
+              {!loggedIn ? <GoogleLogin text="signin" type="icon" shape="pill" size="large" onSuccess={Response => onLogin(Response)} onError={() => console.log("failed")} />
+              :
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -47,7 +60,7 @@ export default function Navbar() {
                       <span className="sr-only">Open user menu</span>
                       <img
                         className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        src={userInfo.image}
                         alt=""
                       />
                     </Menu.Button>
@@ -64,38 +77,19 @@ export default function Navbar() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
+                          <button
+                            onClick={onLogout}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>
                 </Menu>
-              </div>
+                </div>
+              }
             </div>
           </div>
 

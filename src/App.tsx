@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect, useState, createContext } from 'react';
 import axios from 'axios';
 import Inputs from "./Components/Inputs"
 import Filedrop from './Components/Filedrop';
 import Navbar from "./Components/Navbar";
+import AccountContext from './contexts/AccountContext';
 
 
 import {COLORS} from "./values/colors";
+
 
 // Constants
 const REPLICATE_API_TOKEN = "Token 0e7d85ae952a8f85575433e4aeb83021e063f12b";
@@ -35,6 +38,10 @@ function App() {
   const [intervalId, setIntervalId] = useState<number>(); // Interval ID for polling api request
   const [task, setTask] = useState("image_captioning"); // Current task being run for api request
   const [input, setInput] = useState("") // Current input being used for api request
+  const [loggedIn, setLoggedIn] = useState(false); // Flag for whether user is logged in
+  const [userInfo, setUserInfo] = useState({}); // User info for logged in user
+
+
   
   // Effect hook used to continously poll the API every 2 seconds
   useEffect(() => {
@@ -158,6 +165,7 @@ function App() {
 
   return (
     <div className='flex flex-col w-full h-screen bg-slate-50'>
+      <AccountContext.Provider value={{loggedIn, setLoggedIn, userInfo, setUserInfo}}>
       <Navbar />
       <h1 className='text-center mt-1'>
         An Image Description Tool for the Visually Impaired.
@@ -191,12 +199,13 @@ function App() {
             
             <Inputs setTask={setTask} setInput={setInput} onFileUpload={onFileUpload}/>
 
-            {output ? <div className="mt-4 bg-cnight text-white border-choney border-2 text-sm rounded-sm block w-full p-2.5 ">{output}</div> : ''}
+            
           </div>
-
         </div>
-        
       </div>
+
+      {output ? <div className="mt-4 mx-auto bg-cnight text-white text-center border-choney border-2 text-sm rounded-sm block w-4/6 p-2.5 ">{output.toUpperCase()}</div> : ''}
+
       <br />
       <br />
       
@@ -205,8 +214,10 @@ function App() {
       <h1>interval {intervalId}</h1>
       <h1>promURL {promUrl}</h1>
       <h1>fileStr {fileStr}</h1> */}
+      </AccountContext.Provider>
     </div>
   )
 }
 
-export default App
+export default App;
+
