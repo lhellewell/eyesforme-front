@@ -84,7 +84,7 @@ const Filedrop : React.FC<any> = ({setFileStr, setFile}) => {
 		<div className='m-6'>
 			<Container className='container cursor-pointer mx-auto' {...getRootProps({isFocused, isDragAccept, isDragReject})}>
 				<input {...getInputProps()} />
-				<p className=''>Drag 'n' drop some files here, or click to select files</p>
+				<p className=''>Drop an image here, or click to select</p>
 				{currFile ? 
 				<p>{currFile.path} - {currFile.size} bytes</p>
 				: <></>}

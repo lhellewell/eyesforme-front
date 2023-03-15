@@ -2,7 +2,7 @@ const LogoText :  React.FC = () => {
 	return (
 		<div className="ml-1">
 			<h1 className='text-white text-3xl font-sans'>
-                BE MY EYES
+                EYES FOR ME
             </h1> 
     	</div>
 	);

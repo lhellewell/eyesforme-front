@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { ReactComponent as Logo } from '../assets/logo.svg'
 import LogoText from './LogoText'
+import {  GoogleLogin } from "@react-oauth/google";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -11,6 +12,17 @@ function classNames(...classes) {
  * 
  */
 export default function Navbar() {
+
+  const onLogin = async (response) => {
+
+    const serverInfo = await axios.get(
+      'https://localhost:7048/User/login',
+      { headers: { Authorization: `Bearer ${response.credential}` } },
+    );
+
+    console.log(serverInfo);
+  }
+
   return (
     <Disclosure as="nav" className="bg-[#333533]">
       {({ open }) => (
@@ -26,7 +38,7 @@ export default function Navbar() {
               
 
               
-              
+              <GoogleLogin text="signin" type="icon" shape="pill" size="large" onSuccess={Response => onLogin(Response)} onError={() => console.log("failed")} />
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">

@@ -3,7 +3,7 @@ import axios from 'axios';
 import Inputs from "./Components/Inputs"
 import Filedrop from './Components/Filedrop';
 import Navbar from "./Components/Navbar";
-import { useGoogleLogin, GoogleLogin, GoogleLoginProps } from "@react-oauth/google";
+
 
 import {COLORS} from "./values/colors";
 
@@ -155,36 +155,6 @@ function App() {
     }
   };
 
-  const googleLogin: any = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      console.log(tokenResponse);
-      const userInfo = await axios.get(
-      'https://www.googleapis.com/oauth2/v3/userinfo',
-      { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } },
-      );
-
-      console.log(userInfo);
-
-      const serverInfo = await axios.get(
-        'https://localhost:7048/User/1',
-        { headers: { Authorization: `Bearer ${tokenResponse.access_token}` } },
-      );
-
-      console.log(serverInfo);
-      
-    },
-    onError: errorResponse => console.log(errorResponse),
-    });
-
-  const onLogin = async (response: any) => {
-    const serverInfo = await axios.get(
-      'https://localhost:7048/User/1',
-      { headers: { Authorization: `Bearer ${response.credential}` } },
-    );
-
-    console.log(serverInfo);
-  }
-
 
   return (
     <div className='flex flex-col w-full h-screen bg-slate-50'>
@@ -228,9 +198,8 @@ function App() {
         
       </div>
       <br />
-      <button onClick={googleLogin}>GOOGLE LOGIN</button>
       <br />
-      <GoogleLogin onSuccess={Response => onLogin(Response)} onError={() => console.log("failed")} />
+      
       {/* States for testing */}
       {/* <h1>status {status} </h1>
       <h1>interval {intervalId}</h1>
